@@ -1,0 +1,4 @@
+*.class
+.classpath
+build/
+.settings/

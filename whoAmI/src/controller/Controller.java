@@ -143,7 +143,7 @@ public class Controller extends HttpServlet {
 		} catch (RollbackException e) {
 			e.printStackTrace();
 		}
-		
+/*		
 		try {
 			Customer customer = customerDAO.getCustomers("zm");
 			if (customer == null) {
@@ -163,7 +163,7 @@ public class Controller extends HttpServlet {
 		} catch (RollbackException e) {
 			e.printStackTrace();
 		}
-	/*	
+		
 		try {
 			Fund fund1 = fundDAO.getFunds("Google");
 			if (fund1 == null) {

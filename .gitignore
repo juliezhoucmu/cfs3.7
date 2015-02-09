@@ -2,3 +2,11 @@
 .classpath
 build/
 .settings/
+twitter4j-4.0.2/
+twitter4j-4.0.3-SNAPSHOT/
+*.zip
+.DS_Store
+*.ipr
+*.iml
+*.iws
+target

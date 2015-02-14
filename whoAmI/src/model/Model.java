@@ -25,6 +25,7 @@ public class Model {
 	private PositionDAO positionDAO;
 	private Fund_Price_HistoryDAO fundPriceHistoryDAO;
 	private DateDAO dDAO;
+	private CommentDAO commentDAO;
 
 	public Model(ServletConfig _config) throws ServletException{
 		try {
@@ -38,6 +39,8 @@ public class Model {
 			employeeDAO = new EmployeeDAO(pool,"Employee");
 			fundDAO = new FundDAO(pool, "Fund");
 			fundPriceHistoryDAO = new Fund_Price_HistoryDAO(pool, "FundPriceHistory");
+			commentDAO = new CommentDAO(pool, "Comment");
+
 			dDAO=new DateDAO(pool,"Date");
 			
 			
@@ -54,5 +57,10 @@ public class Model {
 	public PositionDAO getPositionDAO()   { return positionDAO; }
 	public Fund_Price_HistoryDAO getFund_Price_HistoryDAO() { return fundPriceHistoryDAO;}
 	public DateDAO getDateDAO(){return dDAO;}
+
+
+	public CommentDAO getCommentDAO() {
+		 return commentDAO;
+	}
 
 }

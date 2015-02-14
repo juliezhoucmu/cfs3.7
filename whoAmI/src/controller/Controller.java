@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import model.CommentDAO;
 import model.CustomerDAO;
 import model.EmployeeDAO;
 import model.FundDAO;
@@ -26,6 +27,7 @@ import model.TransactionDAO;
 
 import org.genericdao.RollbackException;
 
+import databean.Comment;
 import databean.Customer;
 import databean.Employee;
 import databean.Fund;
@@ -53,13 +55,27 @@ public class Controller extends HttpServlet {
 		Action.add(new RequestCheckAction(model));
 		Action.add(new CustomerSearchAction(model));
 		Action.add(new GameplayAction(model));
+		Action.add(new DisplayChartAction(model));
+		
+		
+		//precompute sentiment analysis and store in db
+		SentimentAnalysis initialise=new SentimentAnalysis();
+		try {
+			initialise.sendPostRequest(model.getCommentDAO());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		initializeTable(model.getCustomerDAO(), 
 				model.getEmployeeDAO(),
 				model.getTransactionDAO(), 
 				model.getFundDAO(),
 				model.getPositionDAO(),
-				model.getFund_Price_HistoryDAO()
+				model.getFund_Price_HistoryDAO(),
+				model.getCommentDAO()
+
+				
 				);
 	
 	}
@@ -86,7 +102,7 @@ public class Controller extends HttpServlet {
 		// System.out.println("servletPath="+servletPath+" requestURI="+request.getRequestURI()+"  user="+user);
 
 		if (action.equals("register.do") || action.equals("login.do")
-				|| action.equals("list.do") || action.equals("update.do")) {
+				|| action.equals("list.do") || action.equals("update.do") || action.equals("displayChart.do")) {
 			// Allow these actions without logging in
 			return Action.perform(action, request);
 		}
@@ -130,7 +146,7 @@ public class Controller extends HttpServlet {
 	}
 	
 	public void initializeTable(CustomerDAO customerDAO, EmployeeDAO employeeDAO, TransactionDAO transactionDAO,FundDAO fundDAO,PositionDAO positionDAO, 
-			Fund_Price_HistoryDAO fundPriceHistoryDAO) {
+			Fund_Price_HistoryDAO fundPriceHistoryDAO, CommentDAO commentDAO) {
 
 		try {
 			Employee admin = employeeDAO.read("admin");
@@ -143,153 +159,54 @@ public class Controller extends HttpServlet {
 		} catch (RollbackException e) {
 			e.printStackTrace();
 		}
-/*		
+	
+	
 		try {
-			Customer customer = customerDAO.getCustomers("zm");
-			if (customer == null) {
-				Customer newcustomer1 = new Customer();
-				newcustomer1.setUsername("zm");
-				newcustomer1.setAddr_line1("417 S Craig Stree");
-				newcustomer1.setAddr_line2("Apt 201A");
-				newcustomer1.setCash(20000l);
-				newcustomer1.setCity("Pittsburgh");
-				newcustomer1.setFirstname("Mi");
-				newcustomer1.setLastname("Zhou");
-				newcustomer1.setPassword("passw0rd");
-				newcustomer1.setZip("15213");
-				newcustomer1.setState("PA");
-				customerDAO.create(newcustomer1);
-			}
-		} catch (RollbackException e) {
-			e.printStackTrace();
-		}
-		
-		try {
-			Fund fund1 = fundDAO.getFunds("Google");
-			if (fund1 == null) {
-				fund1 = new Fund();
-				fund1.setName("Google");
-				fund1.setSymbol("GOOG");
-				System.out.println(fund1.getName());
+			Comment comment1 = commentDAO.getComments("kp");
+			if (comment1 == null) {
+				comment1 = new Comment();
+				comment1.setName("kp");
+				comment1.setPositiveCon(10);
+				comment1.setNegativeCon(20);
+				comment1.setNeutralCon(30);
+				
+				System.out.println(comment1.getName());
 				// fundDAO.createAutoIncrement(fund1);
-				fundDAO.create(fund1);
+				commentDAO.create(comment1);
 			}
 			
 
-			Fund fund2 = fundDAO.getFunds("IBM");
-			if (fund2 == null) {
-				fund2 = new Fund();
-				fund2.setName("IBM");
-				fund2.setSymbol("IBM");
-				fundDAO.createAutoIncrement(fund2);
+			Comment comment2 = commentDAO.getComments("kp");
+			if (comment2 == null) {
+				comment2 = new Comment();
+				comment2.setName("kp");
+				comment2.setPositiveCon(10);
+				comment2.setNegativeCon(20);
+				comment2.setNeutralCon(30);
+				
+				System.out.println(comment1.getName());
+				// fundDAO.createAutoIncrement(fund1);
+				commentDAO.create(comment2);
 			}
-			
-			
-			Fund fund3 = fundDAO.getFunds("Facebook");
-			if (fund3 == null) {
-				fund3 = new Fund();
-				fund3.setName("Facebook");
-				fund3.setSymbol("FB");
-				fundDAO.createAutoIncrement(fund3);
+
+			Comment comment3 = commentDAO.getComments("kp");
+			if (comment3 == null) {
+				comment3 = new Comment();
+				comment3.setName("kp");
+				comment3.setPositiveCon(10);
+				comment3.setNegativeCon(20);
+				comment3.setNeutralCon(30);
+				
+				System.out.println(comment1.getName());
+				// fundDAO.createAutoIncrement(fund1);
+				commentDAO.create(comment3);
 			}
 
 		} catch (RollbackException e) {
 			e.printStackTrace();
 		}
 		
-		try {
-			TransactionBean transaction1 = new TransactionBean();
-			Customer zm = customerDAO.getCustomers("zm");
-			transaction1.setCustomer_id(zm.getCustomer_id());
-			Calendar cal1 = Calendar.getInstance();
-			cal1.set(2014, 11, 6);
-			transaction1.setExecute_date("2015-01-23");
-			Fund tfund1 = fundDAO.getFunds("Google");
-			transaction1.setFund_id(tfund1.getFund_id());
-			transaction1.setShares(6343);
-			transaction1.setTransaction_type(3);
-			transactionDAO.createAutoIncrement(transaction1);
-
-			TransactionBean transaction2 = new TransactionBean();
-			zm = customerDAO.getCustomers("zm");
-			transaction2.setAmount(100000);
-			transaction2.setCustomer_id(zm.getCustomer_id());
-			Calendar cal2 = Calendar.getInstance();
-			cal2.set(2014, 2, 22);
-			transaction2.setExecute_date("2015-01-23");
-			Fund tfund2 = fundDAO.getFunds("IBM");
-			transaction2.setFund_id(tfund2.getFund_id());
-//			transaction2.setShares(2130);
-			transaction2.setTransaction_type(4);
-			transactionDAO.createAutoIncrement(transaction2);
-			 
-			TransactionBean transaction3 = new TransactionBean();
-			zm = customerDAO.getCustomers("zm");
-			transaction3.setAmount(2000);
-			transaction3.setCustomer_id(zm.getCustomer_id());
-			Calendar cal3 = Calendar.getInstance();
-			cal3.set(2015, 1, 18);
-			transaction3.setExecute_date("2015-01-23");
-			Fund tfund3 = fundDAO.getFunds("Facebook");
-			transaction3.setFund_id(tfund3.getFund_id());
-			transaction3.setTransaction_type(4);
-			transactionDAO.createAutoIncrement(transaction3);
-
-
-		} catch (RollbackException e) {
-			e.printStackTrace();
-		}
 		
-		try {
-			Position position1 = new Position();
-			Customer zm = customerDAO.getCustomers("zm");
-			position1.setCustomer_id(zm.getCustomer_id());
-			position1.setFund_id(1);
-			position1.setShares(12300);
-			positionDAO.create(position1);
-			
-			Position position2 = new Position();
-			position2.setCustomer_id(zm.getCustomer_id());
-			position2.setFund_id(2);
-			position2.setShares(52617);
-			positionDAO.create(position2);
-		}
-		catch (RollbackException e) { e.printStackTrace(); }
-		
-		try {
-			Fund_Price_History fph1 = new Fund_Price_History();
-			Fund fund1 = fundDAO.getFunds("Google");
-			fph1.setFund_id(fund1.getFund_id());
-			fph1.setPrice(50000);
-			Calendar c1 = Calendar.getInstance();
-			c1.set(2015, 1, 21);
-			fph1.isetPrice_date_formatted(c1.getTime());
-			fundPriceHistoryDAO.create(fph1);
-			
-			
-			Fund_Price_History fph2 = new Fund_Price_History();
-			Fund fund2 = fundDAO.getFunds("IBM");
-			fph2.setFund_id(fund2.getFund_id());
-			fph2.setPrice(62300);
-			Calendar c2 = Calendar.getInstance();
-			c2.set(2015, 1, 27);
-			fph2.isetPrice_date_formatted(c2.getTime());
-			fundPriceHistoryDAO.create(fph2);
-			
-			
-			
-			Fund_Price_History fph3 = new Fund_Price_History();
-			Fund fund3 = fundDAO.getFunds("Google");
-			fph3.setFund_id(fund3.getFund_id());
-			fph3.setPrice(67000);
-			Calendar c3 = Calendar.getInstance();
-			c3.set(2015, 1, 26);
-			fph3.isetPrice_date_formatted(c3.getTime());
-			fundPriceHistoryDAO.create(fph3);
-			
-		}
-		catch (RollbackException e) { e.printStackTrace(); }
-*/
 	}
 	
 }

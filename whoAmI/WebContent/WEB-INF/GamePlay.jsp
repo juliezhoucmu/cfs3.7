@@ -2,16 +2,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ page import="databean.Customer"%>
 
-<jsp:include page="template-cus.jsp" />
 
-<ul class="breadcrumb">
-
-	<li class="active"><a href="#">Play</a> <span class="divider">/
-	</span></li>
-
-	<li><a href="gameplay.do">Play Game!</a> <span class="divider">/
-	</span></li>
-</ul>
 
 <div>
 	<h2>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -42,7 +33,9 @@
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			<button type="submit" name="action" value="ask" class="btn btn-success">Ask for help!</button>
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			<button type="submit" name="action" value="pass" class="btn btn-danger">Give up!</button>
-	</div>
+			<form action="displayChart.do" method="post">
+			<button type="submit" name="action" value="pass" class="btn btn-danger" >Give up!</button>
+			</form>>
+				</div>
 	</div>
 <jsp:include page="template-bottom.jsp" />

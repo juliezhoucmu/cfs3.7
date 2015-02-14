@@ -13,7 +13,6 @@
 
 
 	<div class="container">
-
 		<div class="row">
 			<nav class="navbar navbar-default" role="main">
 				<div class="navbar-header">
@@ -27,13 +26,9 @@
 		<div class="row">
 			<div class="col-md-2" role="complementary">
 				<div class="sidebar-nav"></div>
-
-
 			</div>
-			<div class="col-md-10" role="main">
+			<div class="col-md-8" role="main">
 				<div class="container">
-					<div class="row">
-						<div class="span4"></div>
-						<div class="span4">
+					
 					
 

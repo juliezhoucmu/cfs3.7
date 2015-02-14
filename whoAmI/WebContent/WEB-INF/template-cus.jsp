@@ -12,6 +12,34 @@
 <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
 <script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js">
 </script>
+<style>
+div.col-md-2{
+	  background: rgb(224,224,224);
+	  height: 800px;
+	}
+	
+div.footer{
+	position: relative;
+    bottom:0;
+}
+#menu{
+
+}
+body{
+position: absolute;
+height: auto !important;
+height: 100%;
+position:relative; z-index:0;
+background-image:url(oscar.jpg);
+opacity:0.95;
+}
+h2{
+	font-size: 42px;
+	color: rgb(255, 128, 0);
+    text-shadow: 4px 4px 3px rgba(204, 0, 0, 1);
+    font-weight: bold;
+}
+</style>
 <meta charset="UTF-8">
 
 </head>
@@ -23,37 +51,24 @@
      %>
 
 <body>
-	<div class="container">
-		<div class="row" align="center">
-			<nav class="navbar navbar-default" role="main">
-				<div class="navbar-header">
-					<a class="navbar-brand" href="customermanage.do">Oscars Celebrity Guessing Application</a>
-				</div>
-				<div>
-					<p class="navbar-text" align="right">Welcome: ${customer.username}</p>
-				</div>
-				<div>
-					<p class="navbar-text" align="right"><a href="logout.do"> Logout</a></p>
-				</div>
-			</nav>
-		</div>
+	
 
 		<div id ="menu" class="row">
 			<div class="col-md-2" role="complementary">
 				<div class="sidebar-nav">
 					<ul class="nav nav-list">
-						<li class="nav-header">Account</li>
+						<li class="nav-header"><h4>Account</h4></li>
 						<li class="active"><a href="changePassword.do">Change
 								Password</a></li>
 						<li><a href="viewAccAction.do">View Account</a></li>
-					</ul>
+					</ul><br>
 					<ul class="nav nav-list">
-						<li class="nav-header">Scoring Board</li>
+						<li class="nav-header"><h4>Scoring Board</h4></li>
 						<li class="active"><a href="transactionHistory.do">Gameplay History</a></li>
-					</ul>
+					</ul><br>
 					<ul class="nav nav-list">
-						<li class="nav-header">Game</li>
-						<li><a href="gameplay.do">Play Game!</a></li>
+						<li class="nav-header"><h4>Game</h4></li>
+						<li><a href="displayChart.do">Play Game!</a></li>
 					</ul>
 				</div>
 			</div>

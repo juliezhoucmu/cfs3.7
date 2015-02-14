@@ -1,8 +1,9 @@
- <% /*Name:Xu Zhao
-  Andrew ID:xuzhao
-  Course Number:08600
-  Date:12/05/2014
-*/ %> 		
+</div>
+</div>
+<div class="col-md-2" role="complementary">
+				<div class="sidebar-nav"></div>
+			</div>
+			</div>
 </td>
 	</tr>
 	

@@ -15,7 +15,7 @@ public class Comment {
     private int positiveCon;
     private int neutralCon;
 	private int negativeCon;
-    private Date date;
+    private String date;
 
 	
 	
@@ -24,7 +24,7 @@ public class Comment {
 	public int getNegativeCon()     { return negativeCon;  }
 	public String getName() 	{ return name;	}
 	public int getId()      {return id;}
-	public Date getDate()   {return date;};
+	public String getDate()   {return date;};
 	
 
 
@@ -33,7 +33,7 @@ public class Comment {
 	public void setPositiveCon(int i)     {	positiveCon   = i; }
 	public void setNeutralCon(int i)    {	neutralCon  = i; }
 	public void setNegativeCon(int i)    {	negativeCon=i; }
-	public void setDate(Date d)      {date=d;}	
+	public void setDate(String d)      {date=d;}	
 	
 
 

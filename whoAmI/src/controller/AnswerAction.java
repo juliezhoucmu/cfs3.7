@@ -84,7 +84,7 @@ public class AnswerAction extends Action {
 				if (this.twitterUserDAO.getTwitterUser(twitter.getId()) == null) {
 					TwitterUser newuser = new TwitterUser();
 					newuser.setUserId(twitter.getId());
-					if (text.equalsIgnoreCase(pic.getTitle())) {
+					if (text.equals(pic.getTitle())) {
 						newuser.setScore(1l);
 					} else {
 						newuser.setScore(0l);

@@ -44,12 +44,12 @@ public class BackEndCheck implements Runnable {
 		try {
 			TwitterUser user = userDAO.getTwitterUser(twitter.getId());
 			while (true) {
-				if (count > 14) {
+				if (count > 10) {
 					Thread.sleep(15*1000 *60);
 					System.out.println("Getting close to rate limit, sleep for a while");
 					count = 0;
 				}
-				count+=3;
+				count++;
 				System.out.println("Going to check");
 				Post[] postlist = postDAO.getPostByUser(twitter.getId());
 				CheckReply cr = new CheckReply();

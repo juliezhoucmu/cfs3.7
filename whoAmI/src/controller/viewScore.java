@@ -1,6 +1,5 @@
 package controller;
 
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +15,6 @@ import model.TwitterUserDAO;
 import org.mybeans.form.FormBeanFactory;
 
 import twitter4j.Twitter;
-import twitter4j.User;
 import databean.FriendHelp;
 import databean.TwitterUser;
 import formbean.RequestCheckForm;
@@ -49,10 +47,7 @@ public class viewScore extends Action {
 		try {
 
 			Twitter twitter = (Twitter) session.getAttribute("twitter");
-			User profileuser = twitter.showUser(twitter.getId());
-			
 			TwitterUser user = null;
-	
 			user = twitterUserDAO.getTwitterUser(twitter.getId());
 			session.setAttribute("score", user.getScore());
 			

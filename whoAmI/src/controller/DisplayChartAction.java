@@ -44,12 +44,9 @@ public class DisplayChartAction extends Action {
 	
 		try {
 			Comment[] CommentList = CommentDAO.getComments();
-			
 			if(CommentList.length!=0)
 			{
-			for(int i=0;i<CommentList.length;i++){
-				System.out.println(CommentList[i]);
-			}
+			
 			request.setAttribute("CommentList", CommentList);
 			}
 			
@@ -57,8 +54,8 @@ public class DisplayChartAction extends Action {
 
 		
 
-		//	HttpSession session = request.getSession();
-		//	session.setAttribute("CommentList", CommentList);
+			HttpSession session = request.getSession();
+			session.setAttribute("CommentList", CommentList);
 
 			return "DisplayCharts.jsp";
 		} catch (RollbackException e) {

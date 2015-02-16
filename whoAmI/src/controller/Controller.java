@@ -39,13 +39,13 @@ public class Controller extends HttpServlet {
 		
 
 		// precompute sentiment analysis and store in db
-		SentimentAnalysis initialise = new SentimentAnalysis();
+		/*SentimentAnalysis initialise = new SentimentAnalysis();
 		try {
 			initialise.sendPostRequest(model.getCommentDAO());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
 		initializeTable(model);
 	}
 
@@ -78,13 +78,11 @@ public class Controller extends HttpServlet {
 
 		System.out.println("checkingReply = " + checkingReply);
 		// start to check in the backend
-		if (action.equals("viewScore.do") && !checkingReply) {
-			checkingReply = true;
-			System.out.println("checkingReply = " + checkingReply);
+		if (!checkingReply) {
 			BackEndCheck beCheck = new BackEndCheck(twitter,model);
 			Thread t = new Thread(beCheck);
 			t.start();
-			
+			checkingReply = true;
 		}
 		
 		// Let the logged in user run his chosen action
@@ -120,7 +118,7 @@ public class Controller extends HttpServlet {
 	}
 
 	public void initializeTable(Model model)  {
-		try {
+		/*try {
 			CommentDAO commentDAO = model.getCommentDAO();
 			Comment comment1 = commentDAO.getComments("kp");
 			if (comment1 == null) {
@@ -163,7 +161,7 @@ public class Controller extends HttpServlet {
 
 		} catch (RollbackException e) {
 			e.printStackTrace();
-		}
+		}*/
 
 		// fetch flickr pictures
 		String a_api_key = "4222c97abc1c18a7a314993bcb28993e";

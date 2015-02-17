@@ -10,6 +10,7 @@ public class TwitterUser implements Serializable{
 	private long userId;
 	private long score;
 	private String screenName;
+	private String userName;
 	
 	public long getUserId() {
 		return this.userId;
@@ -33,5 +34,13 @@ public class TwitterUser implements Serializable{
 
 	public void setScreenName(String screenName) {
 		this.screenName = screenName;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 }

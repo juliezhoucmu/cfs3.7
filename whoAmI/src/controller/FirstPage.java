@@ -5,6 +5,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -92,7 +93,7 @@ public class FirstPage extends Action {
 						this.twitterUserDAO.update(user);
 						request.setAttribute("msg", "Correct!");
 					} else {
-						request.setAttribute("msg", "Sorry, wrong answer!");
+						request.setAttribute("errmsg", "Sorry, wrong answer!");
 					}
 
 				} catch (IllegalStateException | RollbackException
@@ -130,6 +131,8 @@ public class FirstPage extends Action {
 								.println("------------- currently not post in session");
 						posts = new ArrayList<PostTwit>();
 					}
+					
+					
 					PostTwit newpost = new PostTwit();
 					newpost.setTwitId(status.getId());
 					newpost.setUserId(twitter.getId());
@@ -140,8 +143,18 @@ public class FirstPage extends Action {
 					newpost.setScreenName(twitter.getScreenName());
 					pic = this.picDAO.getPic(picId);
 					newpost.setPicUrl(pic.getUrl());
-					posts.add(newpost);
+					newpost.setTwitUrl("https://twitter.com/" + twitter.getScreenName() + "/status/" + status.getId());
+					newpost.setUserUrl("https://twitter.com/" + twitter.getScreenName());
+					newpost.setUserName(profileuser.getName());
+					posts.add(0,newpost);
+					
+					while (posts.size() > 5) {
+						posts.remove(posts.size() - 1);
+					}
+					
 					request.getSession().setAttribute("posts", posts);
+					
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -154,6 +167,7 @@ public class FirstPage extends Action {
 				request.setAttribute(
 						"msg",
 						"You had successfully post the game to your twitter, please wait for your friends reply!");
+
 
 			} else if (Action.equals("Give up!") && pic != null) {
 				System.out.println("Getting action: Give up!");

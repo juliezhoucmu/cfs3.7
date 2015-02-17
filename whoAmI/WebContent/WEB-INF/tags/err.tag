@@ -1,0 +1,1 @@
+<%if(null != session.getAttribute("errmsg")){%><jsp:doBody/><%}%>

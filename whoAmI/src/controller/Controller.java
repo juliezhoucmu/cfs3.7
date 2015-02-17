@@ -9,11 +9,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import model.Model;
+
 import org.genericdao.RollbackException;
 
-import model.Model;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
+import twitter4j.User;
 import databean.TwitterUser;
 import flickr.getPhotos;
 
@@ -81,6 +83,8 @@ public class Controller extends HttpServlet {
 					twitteruser.setUserId(twitter.getId());
 					twitteruser.setScore(0l);
 					twitteruser.setScreenName(twitter.getScreenName());
+					User profileuser = twitter.showUser(twitter.getId());
+					twitteruser.setUserName(profileuser.getName());
 					model.getTwitterUserDAO().create(twitteruser);
 					session.setAttribute("twitteruser", twitteruser);
 

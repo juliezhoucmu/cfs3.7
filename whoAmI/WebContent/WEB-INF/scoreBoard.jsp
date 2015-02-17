@@ -14,16 +14,14 @@
 			<div class="panel panel-default" align="left">
 
 				<div class="panel-heading">
-					<h1 class="panel-title">Your score is: ${score}</h1>
+					<div class="panel-title"><b>Your score is:   <font size="5" color="green">${score}</font></b></div>
 				</div>
 				<p class="panel-body">
-					You are the top <b>${top}%</b> player
+					You are the top  <font size="4"><b>${top}%</b></font>  player
+					<br>
+					You have beat <font size="4"><b>${beat}</b></font>  players
+					
 				</p>
-				<p class="panel-body">
-					You have beat <b>${beat}</b> players
-				</p>
-
-
 				<div class="panel-heading">
 					<h3 class="panel-title">Top 10 Players</h3>
 				</div>
@@ -40,7 +38,7 @@
 							<c:forEach var="player" items="${topten}" varStatus="status" >
 								<tr>
 									<td>${status.index+1}</td>
-									<td>${player.screenName}</td>
+									<td><font size="4"><b>${player.userName}</b></font>  @${player.screenName}</td>
 									<td>${player.score}</td>
 								</tr>
 							</c:forEach>

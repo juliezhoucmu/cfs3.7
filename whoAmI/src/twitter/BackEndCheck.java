@@ -51,7 +51,6 @@ public class BackEndCheck extends Thread {
 			System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~Running " + this.getId() + "~~~~~~~~~~~~~~~~~~~");
 			TwitterUser user = userDAO.getTwitterUser(twitter.getId());
 			while (check) {
-				Thread.sleep(1000 * 5);
 				Post[] postlist = postDAO.getPostByUser(twitter.getId());
 				CheckReply cr = new CheckReply();
 
@@ -66,21 +65,23 @@ public class BackEndCheck extends Thread {
 							+ ",sleep time" + rateLimitStatus.get("/account/verify_credentials").getSecondsUntilReset()
 							);
 					
-					System.out.println("*********************before check**********************");
-					
-					if (rateLimitStatus.get("/account/verify_credentials").getRemaining() <= 2) {
+					while (rateLimitStatus.get("/account/verify_credentials").getRemaining() <= 2) {
 						System.out.println("=========Going to sleep waiting for verify_credentials reset" 
 					+ ",remain " + rateLimitStatus.get("/account/verify_credentials").getRemaining() 
 					+ ",sleep time" + rateLimitStatus.get("/account/verify_credentials").getSecondsUntilReset()
 					);
-						Thread.sleep(rateLimitStatus.get("/account/verify_credentials").getSecondsUntilReset() * 1000);
+						rateLimitStatus = twitter.getRateLimitStatus();
+						Thread.sleep(1000 * 5);
+						
 					}
-					if (rateLimitStatus.get("/statuses/mentions_timeline").getRemaining() == 0) {
+					while (rateLimitStatus.get("/statuses/mentions_timeline").getRemaining() == 0) {
 						System.out.println("=========Going to sleep waiting for reset"
 								+ ",remain " + rateLimitStatus.get("/statuses/mentions_timeline").getRemaining()
 								+ ",sleep time" + rateLimitStatus.get("/statuses/mentions_timeline").getSecondsUntilReset()
 								);
-						Thread.sleep(1000 * rateLimitStatus.get("/statuses/mentions_timeline").getSecondsUntilReset());
+						rateLimitStatus = twitter.getRateLimitStatus();
+						Thread.sleep(1000 * 5);
+//						Thread.sleep(1000 * rateLimitStatus.get("/statuses/mentions_timeline").getSecondsUntilReset());
 					}
 					
 					

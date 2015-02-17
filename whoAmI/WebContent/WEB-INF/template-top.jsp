@@ -39,7 +39,7 @@ nav{width:100%}
 				<tag:loggedin>
 					<div>
 						<p class="navbar-text" align="right">
-							Hello ${twitter.screenName} <a href="./logout"><button
+							Hello ${twitteruser.userName} <a href="./logout"><button
 									class="btn btn-link" type="button">Logout</button></a>
 						</p>
 					</div>

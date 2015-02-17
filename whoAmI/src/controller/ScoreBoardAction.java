@@ -51,6 +51,9 @@ public class ScoreBoardAction extends Action{
 	        	}
 	        	session.setAttribute("topten", topTen);
 	        	int top = (int)((index + 0.0) / (allusers.length + 0.0)) * 100;
+	        	if (top == 0) {
+	        		top = 1;
+	        	}
 	        	session.setAttribute("top", top);
 	        	session.setAttribute("beat", allusers.length - index - 1);
 	        	session.setAttribute("score",curuser.getScore());

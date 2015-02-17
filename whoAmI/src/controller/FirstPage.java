@@ -91,7 +91,7 @@ public class FirstPage extends Action {
 								.getTwitterUser(twitter.getId());
 						user.setScore(user.getScore() + 1);
 						this.twitterUserDAO.update(user);
-						request.setAttribute("msg", "Correct!");
+						request.setAttribute("msg", "Congratulation! You've got another score!");
 					} else {
 						request.setAttribute("errmsg", "Sorry, wrong answer!");
 					}

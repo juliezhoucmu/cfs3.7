@@ -28,6 +28,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 
+import twitter4j.RateLimitStatus;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.auth.RequestToken;
@@ -38,6 +39,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.util.Map;
 
 public class CallbackServlet extends HttpServlet {
     private static final long serialVersionUID = 1657390011452788111L;
@@ -48,12 +50,19 @@ public class CallbackServlet extends HttpServlet {
         String verifier = request.getParameter("oauth_verifier");
         try {
             twitter.getOAuthAccessToken(requestToken, verifier);
+            System.out.println("------------1 Successfully login in  as" + twitter.getScreenName());
             request.getSession().removeAttribute("requestToken");
+            System.out.println("------------2 Successfully login in  as" + twitter.getScreenName());
+            Map<String, RateLimitStatus> rateLimitStatus = twitter.getRateLimitStatus();;
+            System.out.println("Remaining verify limit = " + rateLimitStatus.get("/account/verify_credentials").getRemaining());
+            
         } catch (TwitterException e) {
             throw new ServletException(e);
         }
+        
+        
         System.out.println("request.getContextPath() + /"+request.getContextPath() + "/");
-
         response.sendRedirect(request.getContextPath() + "/");
+        
     }
 }

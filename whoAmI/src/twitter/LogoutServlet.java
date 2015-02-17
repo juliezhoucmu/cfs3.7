@@ -27,17 +27,38 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 
+import java.io.IOException;
+
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.ServletException;
-import java.io.IOException;
+
+import twitter4j.Twitter;
+import twitter4j.TwitterException;
 
 public class LogoutServlet extends HttpServlet {
     private static final long serialVersionUID = -4433102460849019660L;
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getSession().invalidate();
+    	BackEndCheck t = (BackEndCheck)request.getSession().getAttribute("backendthread");
+        Twitter twitter = (Twitter)request.getSession().getAttribute("twitter");
+        if (t != null) {
+        	
+        	try {
+				System.out.println("=========================I'm going to destroy thread:" + t.getId() + "for user:" + twitter.getScreenName());
+			} catch (IllegalStateException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (TwitterException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+        	t.stopCheck();
+        	System.out.println("=========================thread interrupted" + t.getId());
+        	
+        }
+    	request.getSession().invalidate();
         response.sendRedirect(request.getContextPath()+ "/");
     }
 }

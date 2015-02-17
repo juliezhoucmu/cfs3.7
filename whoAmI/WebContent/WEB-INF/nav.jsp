@@ -1,6 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<%@ page import="databean.Customer"%>
+
 
 <html>
 <head>
@@ -57,13 +57,9 @@ h2{
 			<div class="col-md-2" role="complementary">
 				<div class="sidebar-nav">
 					<ul class="nav nav-list">
-						<li class="nav-header"><h4>Account</h4></li>
-						<li><a href="viewScore.do">View Account</a></li>
-					</ul><br>
-					<ul class="nav nav-list">
 						<li class="nav-header"><h4>Scores</h4></li>
 						<li class="active"><a href="viewScore.do">My Score</a></li>
-						<li class="active"><a href="transactionHistory.do">Scoring Board</a></li>
+						<li class="active"><a href="scoreboard.do">Scoring Board</a></li>
 					</ul><br>
 					<ul class="nav nav-list">
 						<li class="nav-header"><h4>Game</h4></li>

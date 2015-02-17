@@ -2,10 +2,14 @@
 package databean;
 
 
+import java.io.Serializable;
+
 import org.genericdao.PrimaryKey;
 
 @PrimaryKey("picId")
-public class Pic {
+public class Pic implements Serializable{
+	
+	private static final long serialVersionUID = 1L;
 	
 	private long    picId;
 	private String url;

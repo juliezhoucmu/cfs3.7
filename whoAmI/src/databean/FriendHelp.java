@@ -1,10 +1,14 @@
 package databean;
 
+import java.io.Serializable;
+
 import org.genericdao.PrimaryKey;
 
 
 @PrimaryKey("id")
-public class FriendHelp {
+public class FriendHelp implements Serializable{
+	
+	private static final long serialVersionUID = 1L;
 	private long id;
 	private long ownerId;
 	private String friend;

@@ -14,6 +14,7 @@ import model.TwitterUserDAO;
 
 import org.mybeans.form.FormBeanFactory;
 
+import twitter.BackEndCheck;
 import twitter4j.Twitter;
 import databean.FriendHelp;
 import databean.TwitterUser;
@@ -27,8 +28,10 @@ public class viewScore extends Action {
 	private PicDAO picDAO;
 	private PostDAO postDAO;
 	private FriendHelpDAO friendHelpDAO;
+	private Model model;
 
 	public viewScore(Model model) {
+		this.model = model;
 		this.twitterUserDAO = model.getTwitterUserDAO();
 		this.picDAO = model.getPicDAO();
 		this.postDAO = model.getPostDAO();
@@ -47,6 +50,17 @@ public class viewScore extends Action {
 		try {
 
 			Twitter twitter = (Twitter) session.getAttribute("twitter");
+			
+			// start check reply thread in backend
+			Thread t = (Thread)session.getAttribute("backendthread");
+			
+			if (t == null) {
+				
+				BackEndCheck beCheck = new BackEndCheck(twitter,model);
+				session.setAttribute("backendthread", beCheck);
+				beCheck.start();
+			}
+			
 			TwitterUser user = null;
 			user = twitterUserDAO.getTwitterUser(twitter.getId());
 			session.setAttribute("score", user.getScore());
@@ -59,6 +73,7 @@ public class viewScore extends Action {
 					System.out.println(helps[i].getAnswer() + "," + helps[i].getPicUrl());
 				}
 				session.setAttribute("friendhelp", helplist);
+				
 			}
 			
 		} catch (Exception e) {

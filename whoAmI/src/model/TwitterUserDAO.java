@@ -41,4 +41,6 @@ public class TwitterUserDAO extends GenericDAO<TwitterUser> {
 			return users[0];
 		}
 	}	
+	
+	
 }

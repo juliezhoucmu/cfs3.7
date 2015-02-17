@@ -1,5 +1,6 @@
 
 package databean;
+import java.io.Serializable;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Date;
@@ -8,7 +9,8 @@ import java.util.Random;
 import org.genericdao.PrimaryKey;
 
 @PrimaryKey("id")
-public class Comment {
+public class Comment implements Serializable{
+	private static final long serialVersionUID = 1L;
 	
 	private int    id;
     private String name;

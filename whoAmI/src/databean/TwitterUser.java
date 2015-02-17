@@ -1,11 +1,15 @@
 package databean;
 
+import java.io.Serializable;
+
 import org.genericdao.PrimaryKey;
 
 @PrimaryKey("userId")
-public class TwitterUser {
+public class TwitterUser implements Serializable{
+	private static final long serialVersionUID = 1L;
 	private long userId;
 	private long score;
+	private String screenName;
 	
 	public long getUserId() {
 		return this.userId;
@@ -21,5 +25,13 @@ public class TwitterUser {
 	
 	public void setScore(long score) {
 		this.score = score;
+	}
+
+	public String getScreenName() {
+		return screenName;
+	}
+
+	public void setScreenName(String screenName) {
+		this.screenName = screenName;
 	}
 }

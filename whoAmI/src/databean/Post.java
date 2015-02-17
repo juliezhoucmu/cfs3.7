@@ -1,10 +1,14 @@
 package databean;
 
+import java.io.Serializable;
+
 import org.genericdao.PrimaryKey;
 
 @PrimaryKey("twitId")
-public class Post {
+public class Post implements Serializable{
 
+	private static final long serialVersionUID = 1L;
+	
 	private long twitId;
 	private long userId;
 	private long picId;

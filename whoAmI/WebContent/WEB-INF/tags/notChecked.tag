@@ -1,1 +1,0 @@
-<%if(null == session.getAttribute("friendhelp")){%><jsp:doBody/><%}%>

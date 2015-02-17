@@ -5,11 +5,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import model.Model;
+import model.TwitterUserDAO;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
 import twitter4j.auth.RequestToken;
-import databean.TwitterUser;
 
 
 /*
@@ -23,9 +23,9 @@ import databean.TwitterUser;
  */
 public class LoginAction extends Action {
 	
-	
+	private TwitterUserDAO userDAO;
 	public LoginAction(Model model) {
-		
+		userDAO = model.getTwitterUserDAO();
 	}
 
 	public String getName() { return "login.do"; }

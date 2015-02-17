@@ -9,43 +9,37 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import model.CommentDAO;
-import model.Model;
-
 import org.genericdao.RollbackException;
 
-import twitter.BackEndCheck;
+import model.Model;
 import twitter4j.Twitter;
-import databean.Comment;
+import twitter4j.TwitterException;
+import databean.TwitterUser;
 import flickr.getPhotos;
 
 public class Controller extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 	int i = 0;
-	private static boolean checkingReply;
 	public Model model;
-	
 
 	public void init() throws ServletException {
-		checkingReply = false;
+
 		model = new Model(getServletConfig());
 		Action.add(new LoginAction(model));
 		Action.add(new GameplayAction(model));
 		Action.add(new DisplayChartAction(model));
 		Action.add(new FirstPage(model));
-		Action.add(new AnswerAction(model));
 		Action.add(new viewScore(model));
+		Action.add(new ScoreBoardAction(model));
 		
 
 		// precompute sentiment analysis and store in db
-		/*SentimentAnalysis initialise = new SentimentAnalysis();
-		try {
-			initialise.sendPostRequest(model.getCommentDAO());
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/
+		/*
+		 * SentimentAnalysis initialise = new SentimentAnalysis(); try {
+		 * initialise.sendPostRequest(model.getCommentDAO()); } catch (Exception
+		 * e) { // TODO Auto-generated catch block e.printStackTrace(); }
+		 */
 		initializeTable(model);
 	}
 
@@ -63,28 +57,42 @@ public class Controller extends HttpServlet {
 	private String performTheAction(HttpServletRequest request) {
 		String servletPath = request.getServletPath();
 		String action = getActionName(servletPath);
-		
+
 		if (action.equals("login.do")) {
 			return Action.perform(action, request);
 		}
-		
+
 		HttpSession session = request.getSession(true);
 		Twitter twitter = (Twitter) session.getAttribute("twitter");
-		
+
 		if (twitter == null) {
 			System.out.println("redirecting to login.do");
 			return "login.do";
 		}
 
-		System.out.println("checkingReply = " + checkingReply);
-		// start to check in the backend
-		if (!checkingReply) {
-			BackEndCheck beCheck = new BackEndCheck(twitter,model);
-			Thread t = new Thread(beCheck);
-			t.start();
-			checkingReply = true;
+		// twitter exists
+		try {
+			TwitterUser twitteruser = (TwitterUser) session.getAttribute("twitteruser");
+			if (twitteruser == null) {
+				twitteruser = model.getTwitterUserDAO().getTwitterUser(
+						twitter.getId());
+				if (twitteruser == null) {
+					twitteruser = new TwitterUser();
+					twitteruser.setUserId(twitter.getId());
+					twitteruser.setScore(0l);
+					twitteruser.setScreenName(twitter.getScreenName());
+					model.getTwitterUserDAO().create(twitteruser);
+					session.setAttribute("twitteruser", twitteruser);
+
+				} else {
+
+					session.setAttribute("twitteruser", twitteruser);
+				}
+			}
+		} catch (RollbackException | IllegalStateException | TwitterException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		
 		// Let the logged in user run his chosen action
 		return Action.perform(action, request);
 	}
@@ -117,51 +125,34 @@ public class Controller extends HttpServlet {
 		return path.substring(slash + 1);
 	}
 
-	public void initializeTable(Model model)  {
-		/*try {
-			CommentDAO commentDAO = model.getCommentDAO();
-			Comment comment1 = commentDAO.getComments("kp");
-			if (comment1 == null) {
-				comment1 = new Comment();
-				comment1.setName("kp");
-				comment1.setPositiveCon(10);
-				comment1.setNegativeCon(20);
-				comment1.setNeutralCon(30);
-
-				System.out.println(comment1.getName());
-				// fundDAO.createAutoIncrement(fund1);
-				commentDAO.create(comment1);
-			}
-
-			Comment comment2 = commentDAO.getComments("kp");
-			if (comment2 == null) {
-				comment2 = new Comment();
-				comment2.setName("kp");
-				comment2.setPositiveCon(10);
-				comment2.setNegativeCon(20);
-				comment2.setNeutralCon(30);
-
-				System.out.println(comment1.getName());
-				// fundDAO.createAutoIncrement(fund1);
-				commentDAO.create(comment2);
-			}
-
-			Comment comment3 = commentDAO.getComments("kp");
-			if (comment3 == null) {
-				comment3 = new Comment();
-				comment3.setName("kp");
-				comment3.setPositiveCon(10);
-				comment3.setNegativeCon(20);
-				comment3.setNeutralCon(30);
-
-				System.out.println(comment1.getName());
-				// fundDAO.createAutoIncrement(fund1);
-				commentDAO.create(comment3);
-			}
-
-		} catch (RollbackException e) {
-			e.printStackTrace();
-		}*/
+	public void initializeTable(Model model) {
+		/*
+		 * try { CommentDAO commentDAO = model.getCommentDAO(); Comment comment1
+		 * = commentDAO.getComments("kp"); if (comment1 == null) { comment1 =
+		 * new Comment(); comment1.setName("kp"); comment1.setPositiveCon(10);
+		 * comment1.setNegativeCon(20); comment1.setNeutralCon(30);
+		 * 
+		 * System.out.println(comment1.getName()); //
+		 * fundDAO.createAutoIncrement(fund1); commentDAO.create(comment1); }
+		 * 
+		 * Comment comment2 = commentDAO.getComments("kp"); if (comment2 ==
+		 * null) { comment2 = new Comment(); comment2.setName("kp");
+		 * comment2.setPositiveCon(10); comment2.setNegativeCon(20);
+		 * comment2.setNeutralCon(30);
+		 * 
+		 * System.out.println(comment1.getName()); //
+		 * fundDAO.createAutoIncrement(fund1); commentDAO.create(comment2); }
+		 * 
+		 * Comment comment3 = commentDAO.getComments("kp"); if (comment3 ==
+		 * null) { comment3 = new Comment(); comment3.setName("kp");
+		 * comment3.setPositiveCon(10); comment3.setNegativeCon(20);
+		 * comment3.setNeutralCon(30);
+		 * 
+		 * System.out.println(comment1.getName()); //
+		 * fundDAO.createAutoIncrement(fund1); commentDAO.create(comment3); }
+		 * 
+		 * } catch (RollbackException e) { e.printStackTrace(); }
+		 */
 
 		// fetch flickr pictures
 		String a_api_key = "4222c97abc1c18a7a314993bcb28993e";

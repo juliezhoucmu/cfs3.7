@@ -25,24 +25,24 @@ public class CommentDAO extends GenericDAO<Comment> {
 		return comments;
 	}
 	
-	public Comment getComments(String name) throws RollbackException {
+	public Comment[] getComments(String name) throws RollbackException {
 		Comment[] comments = match(MatchArg.equals("name", name));
 		if (comments.length == 0) {
 			return null;
 		}
 		else {
-			return comments[0];
+			return comments;
 		}
 
 	}
 	
-	public Comment getComments(int id) throws RollbackException {
+	public Comment[] getComments(int id) throws RollbackException {
 		Comment[] comments = match(MatchArg.equals("comment_id", id));
 		if (comments.length == 0) {
 			return null;
 		}
 		else {
-			return comments[0];
+			return comments;
 		}
 
 	}

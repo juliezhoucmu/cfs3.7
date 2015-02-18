@@ -11,6 +11,7 @@ public class TwitterUser implements Serializable{
 	private long score;
 	private String screenName;
 	private String userName;
+	private String profileImgUrl;
 	
 	public long getUserId() {
 		return this.userId;
@@ -42,5 +43,13 @@ public class TwitterUser implements Serializable{
 
 	public void setUserName(String userName) {
 		this.userName = userName;
+	}
+
+	public String getProfileImgUrl() {
+		return profileImgUrl;
+	}
+
+	public void setProfileImgUrl(String profileImgUrl) {
+		this.profileImgUrl = profileImgUrl;
 	}
 }

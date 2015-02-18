@@ -1,8 +1,4 @@
-//Hua-Ming Lee
-//huamingl
-//08-600
-//hw9
-//2014/12/1
+
 
 package model;
 

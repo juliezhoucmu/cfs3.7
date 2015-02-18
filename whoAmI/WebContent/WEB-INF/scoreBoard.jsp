@@ -19,7 +19,7 @@
 				<p class="panel-body">
 					You are the top  <font size="4"><b>${top}%</b></font>  player
 					<br>
-					You have beat <font size="4"><b>${beat}</b></font>  players
+					You have beaten <font size="4"><b>${beat}</b></font>  players
 					
 				</p>
 				<div class="panel-heading">
@@ -38,7 +38,7 @@
 							<c:forEach var="player" items="${topten}" varStatus="status" >
 								<tr>
 									<td>${status.index+1}</td>
-									<td><font size="4"><b>${player.userName}</b></font>  @${player.screenName}</td>
+									<td><img src=${player.profileImgUrl}><font size="4"><b>${player.userName}</b></font>  @${player.screenName}</td>
 									<td>${player.score}</td>
 								</tr>
 							</c:forEach>

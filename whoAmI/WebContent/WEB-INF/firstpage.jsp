@@ -17,25 +17,20 @@
 							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="submit"
 							name="post" value="I Know!" class="btn btn-success ">
 							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="submit"
-							name="post" value="Ask for help on twitter" class="btn btn-primary">
-							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-							</form>
-
-							<form action="./displayChart.do" method="post">
-								<input type="submit" name="post" value="Give up!"
-									class="btn btn-danger">
-							</form>
+							name="post" value="Ask for help on twitter"
+							class="btn btn-primary">
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="submit"
+							name="post" value="Give up!" class="btn btn-danger">
 						</td>
 					</tr>
-
+					
 					<tr>
 						<td><br></td>
 					</tr>
-
-
+					
 					<tr>
-						<td><input name="text"
-							placeholder="your answer" class="form-control"></td>
+						<td><input name="text" placeholder="your answer"
+							class="form-control"></td>
 						<input type="hidden" name="id" value=${question.id}>
 					</tr>
 
@@ -49,6 +44,7 @@
 					</tr>
 
 				</table>
+			</form>
 		</div>
 	</div>
 	<div class="col-md-4" role="main">
@@ -71,16 +67,20 @@
 				<c:forEach var="post" items="${posts}">
 
 					<div class="panel-body">
-						<a href=${post.userUrl}><img src=${post.profileImageUrl}></a><font size="3">${post.userName}</font> <a href=${post.userUrl}>@${post.screenName}</a>
-						<br><br>
-						<a href="https://twitter.com/hashtag/WhoIsThis?src=hash">#WhoIsThis?</a>
-						HELP ME!!! do you know who is this? <br> 
-						<br>
-						<a href=${post.twitUrl}><img src="twittericon.png" width="150" align="left"></a><div align="right"><a href=${post.twitUrl}><font size="2">view more</font></a>&#12288;&#12288;</div>
-						<br>
-						<a href=${post.twitUrl}><img
-							src=${post.picUrl} width="250"></a>
-							<hr>
+						<a href=${post.userUrl}><img src=${post.profileImageUrl}></a><font
+							size="3">${post.userName}</font> <a href=${post.userUrl}>@${post.screenName}</a>
+						<br> <br> <a
+							href="https://twitter.com/hashtag/WhoIsThis?src=hash">#WhoIsThis?</a>
+						HELP ME!!! do you know who is this? <br> <br> <a
+							href=${post.twitUrl}><img src="twittericon.png" width="150"
+							align="left"></a>
+						<div align="right">
+							<a href=${post.twitUrl}><font size="2">view more</font></a>&#12288;&#12288;
+						</div>
+						<br> <a href=${post.twitUrl}><img
+							src=${post.picUrl
+							} width="250"></a>
+						<hr>
 					</div>
 				</c:forEach>
 			</tag:posted>

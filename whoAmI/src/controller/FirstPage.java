@@ -91,7 +91,8 @@ public class FirstPage extends Action {
 								.getTwitterUser(twitter.getId());
 						user.setScore(user.getScore() + 1);
 						this.twitterUserDAO.update(user);
-						request.setAttribute("msg", "Congratulation! You've got another score ^_^");
+						request.setAttribute("msg",
+								"Congratulation! You've got another score ^_^");
 					} else {
 						request.setAttribute("errmsg", "Oops, wrong answer =_=");
 					}
@@ -131,8 +132,7 @@ public class FirstPage extends Action {
 								.println("------------- currently not post in session");
 						posts = new ArrayList<PostTwit>();
 					}
-					
-					
+
 					PostTwit newpost = new PostTwit();
 					newpost.setTwitId(status.getId());
 					newpost.setUserId(twitter.getId());
@@ -143,18 +143,20 @@ public class FirstPage extends Action {
 					newpost.setScreenName(twitter.getScreenName());
 					pic = this.picDAO.getPic(picId);
 					newpost.setPicUrl(pic.getUrl());
-					newpost.setTwitUrl("https://twitter.com/" + twitter.getScreenName() + "/status/" + status.getId());
-					newpost.setUserUrl("https://twitter.com/" + twitter.getScreenName());
+					newpost.setTwitUrl("https://twitter.com/"
+							+ twitter.getScreenName() + "/status/"
+							+ status.getId());
+					newpost.setUserUrl("https://twitter.com/"
+							+ twitter.getScreenName());
 					newpost.setUserName(profileuser.getName());
-					posts.add(0,newpost);
-					
+					posts.add(0, newpost);
+
 					while (posts.size() > 5) {
 						posts.remove(posts.size() - 1);
 					}
-					
+
 					request.getSession().setAttribute("posts", posts);
-					
-					
+
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -164,13 +166,14 @@ public class FirstPage extends Action {
 					System.out.println("----posts---------@"
 							+ pt.getScreenName() + "," + pt.getTwitId());
 				}
-				request.setAttribute(
-						"msg",
+				request.setAttribute("msg",
 						"Tweet posted, let's wait for your friends response!");
-
 
 			} else if (Action.equals("Give up!") && pic != null) {
 				System.out.println("Getting action: Give up!");
+				System.out.println("id :" + pic.getPicId() + ",title"
+						+ pic.getTitle() + ", url:" + pic.getUrl());
+				request.getSession().setAttribute("starname", pic.getTitle());
 				return "displayChart.do";
 			}
 		} else {

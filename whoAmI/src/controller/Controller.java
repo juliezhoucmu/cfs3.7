@@ -85,6 +85,8 @@ public class Controller extends HttpServlet {
 					twitteruser.setScreenName(twitter.getScreenName());
 					User profileuser = twitter.showUser(twitter.getId());
 					twitteruser.setUserName(profileuser.getName());
+					twitteruser.setProfileImgUrl(profileuser.getProfileImageURL());
+					System.out.println(twitteruser.getProfileImgUrl());
 					model.getTwitterUserDAO().create(twitteruser);
 					session.setAttribute("twitteruser", twitteruser);
 

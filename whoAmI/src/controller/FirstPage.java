@@ -84,23 +84,23 @@ public class FirstPage extends Action {
 				e2.printStackTrace();
 			}
 
-			if (Action.equals("Answer") && pic != null) {
+			if (Action.equals("I Know!") && pic != null) {
 				try {
 					if (text.equalsIgnoreCase(pic.getTitle())) {
 						TwitterUser user = this.twitterUserDAO
 								.getTwitterUser(twitter.getId());
 						user.setScore(user.getScore() + 1);
 						this.twitterUserDAO.update(user);
-						request.setAttribute("msg", "Congratulation! You've got another score!");
+						request.setAttribute("msg", "Congratulation! You've got another score ^_^");
 					} else {
-						request.setAttribute("errmsg", "Sorry, wrong answer!");
+						request.setAttribute("errmsg", "Oops, wrong answer =_=");
 					}
 
 				} catch (IllegalStateException | RollbackException
 						| TwitterException e) {
 					e.printStackTrace();
 				}
-			} else if (Action.equals("Ask for help!") && pic != null) {
+			} else if (Action.equals("Ask for help on twitter") && pic != null) {
 				try {
 					statusUpdate.setMedia("Pic",
 							new URL(pic.getUrl()).openStream());
@@ -166,7 +166,7 @@ public class FirstPage extends Action {
 				}
 				request.setAttribute(
 						"msg",
-						"You had successfully post the game to your twitter, please wait for your friends reply!");
+						"Tweet posted, let's wait for your friends response!");
 
 
 			} else if (Action.equals("Give up!") && pic != null) {

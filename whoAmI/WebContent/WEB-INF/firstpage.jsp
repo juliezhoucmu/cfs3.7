@@ -15,9 +15,9 @@
 					<tr>
 						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="submit"
-							name="post" value="Answer" class="btn btn-success ">
+							name="post" value="I Know!" class="btn btn-success ">
 							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="submit"
-							name="post" value="Ask for help!" class="btn btn-primary">
+							name="post" value="Ask for help on twitter" class="btn btn-primary">
 							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 							</form>
 
@@ -35,7 +35,7 @@
 
 					<tr>
 						<td><input name="text"
-							placeholder="Type in name of this celebrity" class="form-control"></td>
+							placeholder="your answer" class="form-control"></td>
 						<input type="hidden" name="id" value=${question.id}>
 					</tr>
 
@@ -76,7 +76,7 @@
 						<a href="https://twitter.com/hashtag/WhoIsThis?src=hash">#WhoIsThis?</a>
 						HELP ME!!! do you know who is this? <br> 
 						<br>
-						<img src="twittericon.png" width="150" align="left"><div align="right"><a href=${post.twitUrl}><font size="2">view more</font></a>&#12288;&#12288;</div>
+						<a href=${post.twitUrl}><img src="twittericon.png" width="150" align="left"></a><div align="right"><a href=${post.twitUrl}><font size="2">view more</font></a>&#12288;&#12288;</div>
 						<br>
 						<a href=${post.twitUrl}><img
 							src=${post.picUrl} width="250"></a>

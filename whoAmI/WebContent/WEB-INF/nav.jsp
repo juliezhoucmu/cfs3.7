@@ -14,7 +14,7 @@
 </script>
 <style>
 div.col-md-2{
-	  background: rgb(248,248,248);
+	  background: rgb(244,244,244);
 	  height: 800px;
 	}
 	
